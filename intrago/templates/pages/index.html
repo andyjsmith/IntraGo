@@ -37,18 +37,18 @@
 		<thead>
 			<tr>
 				<th>Name</th>
+				<th>URL</th>
 				<th>Accesses</th>
 				<th>Created</th>
-				<th>URL</th>
 				<th>Delete</th>
 			</tr>
 		</thead>
 		{% for site in sites %}
 		<tr>
 			<td>{{ site.name }}</td>
+			<td><a href="{{ site.url }}">{{ site.url }}</a></td>
 			<td>{{ site.accesses }}</td>
 			<td>{{ site.created }}</td>
-			<td><a href="{{ site.url }}">{{ site.url }}</a></td>
 			<form action="/api/v1/site/delete" method="POST">
 				<input type="hidden" name="id" value="{{ site.id }}">
 				<td><button class="button is-small delete-site-btn">✖</button></td>
