@@ -1,4 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import (
+    Blueprint,
+    render_template,
+    redirect,
+)
 from database import db
 from intrago.models import Site
 

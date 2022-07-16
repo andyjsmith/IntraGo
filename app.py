@@ -1,7 +1,7 @@
 import os
 from subprocess import Popen
 
-from flask import Flask
+from flask import Flask, send_from_directory
 
 
 def create_app():
@@ -37,5 +37,14 @@ if __name__ == "__main__":
         )
     app, db = create_app()
     setup_database(app, db)
+
+    # Favicon request
+    @app.route("/favicon.ico")
+    def favicon():
+        return send_from_directory(
+            os.path.join(app.root_path, "static/icons"),
+            "favicon.ico",
+            mimetype="image/vnd.microsoft.icon",
+        )
 
     app.run(debug=True)
