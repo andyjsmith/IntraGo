@@ -1,0 +1,14 @@
+$primary: #0070f3;
+
+@import "dist/bulma/bulma.sass";
+@import "dist/bulma-prefers-dark/bulma-prefers-dark.sass";
+
+
+.delete-site-btn {
+	padding: 0px 7px;
+    height: 1.7em;
+}
+
+.is-spaced {
+	margin-top: 1.5em;
+}

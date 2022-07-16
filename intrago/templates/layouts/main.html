@@ -1,0 +1,59 @@
+<!doctype html>
+
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}{% endblock %}</title>
+
+	<!-- meta -->
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- /meta -->
+
+	<!-- styles -->
+	{% block styles %}
+	{% endblock %}
+	<link type="text/css" rel="stylesheet" href="/static/dist/bundle.css" />
+	<!-- /styles -->
+
+	<!-- scripts -->
+	{% block scripts %}
+	{% endblock %}
+	<!-- /scripts -->
+
+</head>
+
+<body>
+	<!-- Begin page content -->
+	<section class="section">
+		<div class="container">
+			<h1 class="title is-1"><a href="/">IntraGo</a></h1>
+			<h2 class="subtitle">Intranet URL Shortener</h2>
+
+			{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+			{% for category, message in messages %}
+			<div class="notification is-{{ category }}">
+				{{ message }}
+			</div>
+			{% endfor %}
+			{% endif %}
+			{% endwith %}
+
+			{% block content %}{% endblock %}
+		</div>
+	</section>
+
+	<div>
+		<footer class="footer">
+			<div class="content has-text-centered">
+				<p>
+					<strong>IntraGo</strong> by
+					<a href="https://ajsmith.us">Andy Smith</a>. &copy; 2022. All rights reserved.
+				</p>
+			</div>
+		</footer>
+	</div>
+</body>
+
+</html>

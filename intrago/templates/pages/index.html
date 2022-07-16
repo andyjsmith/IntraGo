@@ -1,0 +1,65 @@
+{% extends 'layouts/main.html' %}
+{% block title %}IntraGo{% endblock %}
+
+{% block styles %}
+<link type="text/css" rel="stylesheet" href="/static/dist/datatables/datatables.min.css" />
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="/static/dist/jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="/static/dist/datatables/datatables.min.js"></script>
+<script type="text/javascript" src="/static/js/index.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="block">
+	<form action="/api/v1/site/add" method="POST" autocomplete="off">
+		<h2 class="title is-spaced">Add site</h2>
+		<div class="field is-grouped">
+			<p class="control">
+				<input class="input" type="text" name="name" placeholder="Go command">
+			</p>
+			<p class="control is-expanded">
+				<input class="input" type="text" name="url" placeholder="https://">
+			</p>
+			<p class="control">
+				<button class="button is-primary">
+					Add Site
+				</button>
+			</p>
+		</div>
+	</form>
+</div>
+
+<div class="block">
+	<h2 class="title is-spaced">Sites</h2>
+	<table id="site-table" class="table is-fullwidth is-hoverable is-striped is-narrow">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Accesses</th>
+				<th>Created</th>
+				<th>URL</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		{% for site in sites %}
+		<tr>
+			<td>{{ site.name }}</td>
+			<td>{{ site.accesses }}</td>
+			<td>{{ site.created }}</td>
+			<td><a href="{{ site.url }}">{{ site.url }}</a></td>
+			<form action="/api/v1/site/delete" method="POST">
+				<input type="hidden" name="id" value="{{ site.id }}">
+				<td><button class="button is-small delete-site-btn">✖</button></td>
+			</form>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+<div class="block">
+	<h2 class="title is-spaced">Configure</h2>
+	For Chrome, add a new site search with the shortcut "go" and the URL: <code><span id="go-url"></span></code>
+</div>
+{% endblock %}
