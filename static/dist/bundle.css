@@ -16997,4 +16997,9 @@ label.panel-block:hover {
   margin-top: 1.5em;
 }
 
+#add-site-form input[type=checkbox], #add-site-form .checkbox {
+  height: 100%;
+  vertical-align: middle;
+}
+
 /*# sourceMappingURL=bundle.css.map */

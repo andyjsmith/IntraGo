@@ -30,7 +30,7 @@ def setup_database(app, db):
 
 if __name__ == "__main__":
     # Compile SCSS in real-time
-    if os.environ["FLASK_ENV"] == "development":
+    if os.environ["FLASK_DEBUG"] == "True":
         print("Starting SCSS compiler")
         scss = Popen(
             ["sass", "--watch", "assets/scss/main.scss", "static/dist/bundle.css"]

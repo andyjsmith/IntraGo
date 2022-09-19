@@ -160,4 +160,5 @@ cython_debug/
 #.idea/
 
 # IntraGo
-database.sqlite3
+/database.sqlite3
+/run.ps1

@@ -13,7 +13,7 @@
 
 {% block content %}
 <div class="block">
-	<form action="/api/v1/site/add" method="POST" autocomplete="off">
+	<form action="/api/v1/site/add" method="POST" autocomplete="off" id="add-site-form">
 		<h2 class="title is-spaced">Add site</h2>
 		<div class="field is-grouped">
 			<p class="control">
@@ -21,6 +21,12 @@
 			</p>
 			<p class="control is-expanded">
 				<input class="input" type="text" name="url" placeholder="https://">
+			</p>
+			<p class="control">
+				<label class="checkbox">
+					<input type="checkbox" name="prefixed">
+					Prefixed
+				</label>
 			</p>
 			<p class="control">
 				<button class="button is-primary">
@@ -32,12 +38,25 @@
 </div>
 
 <div class="block">
+	<p><strong>Go command:</strong> The shortcut name that you will type in. This is the prefix name for prefixed sites.
+	</p>
+	<p><strong>URL:</strong> Any URL to redirect to</p>
+	<p><strong>Prefixed:</strong> When true, the go command will act as child search engine. Each space-separated term
+		after the prefix will be substituted into the URL at the positions specified by <code>{0}</code>,
+		<code>{1}</code>, etc. If the number of terms is greater than the number of URL positions, the last position
+		will be given the rest of the text. E.g., a URL <code>https://google.com/search?q={0}</code> and prefix
+		<code>google</code> could be searched using <code>go google mysearchterm</code>
+	</p>
+</div>
+
+<div class="block">
 	<h2 class="title is-spaced">Sites</h2>
 	<table id="site-table" class="table is-fullwidth is-hoverable is-striped is-narrow">
 		<thead>
 			<tr>
 				<th>Name</th>
 				<th>URL</th>
+				<th>Prefixed</th>
 				<th>Accesses</th>
 				<th>Created</th>
 				<th>Delete</th>
@@ -47,6 +66,7 @@
 		<tr>
 			<td>{{ site.name }}</td>
 			<td><a href="{{ site.url }}">{{ site.url }}</a></td>
+			<td>{{ site.prefixed }}</td>
 			<td>{{ site.accesses }}</td>
 			<td>{{ site.created }}</td>
 			<form action="/api/v1/site/delete" method="POST">

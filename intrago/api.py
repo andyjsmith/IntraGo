@@ -16,7 +16,11 @@ def add_site():
         flash("Invalid form data", "danger")
         return redirect(url_for("intrago.index"))
 
-    site = Site(form.name.data, form.url.data)
+    if form.prefixed.data and " " in form.name.data:
+        flash("Prefixed site commands cannot have spaces", "danger")
+        return redirect(url_for("intrago.index"))
+
+    site = Site(form.name.data, form.url.data, form.prefixed.data)
 
     db.session.add(site)
     try:
