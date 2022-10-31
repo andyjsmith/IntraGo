@@ -8,11 +8,17 @@ def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
 
-    from database import db
-
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.sqlite3"
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQLALCHEMY_DATABASE_URI", "sqlite:///database.sqlite3")
+
+    from database import db
     db.init_app(app)
+
+    @app.before_first_request
+    def create_tables():
+        db.create_all()
+    # with app.app_context():
+    #     db.create_all()
 
     from intrago.views import intrago
     from intrago.api import api
@@ -20,12 +26,7 @@ def create_app():
     app.register_blueprint(intrago, url_prefix="")
     app.register_blueprint(api, url_prefix="/api/v1")
 
-    return app, db
-
-
-def setup_database(app, db):
-    with app.app_context():
-        db.create_all()
+    return app
 
 
 if __name__ == "__main__":
@@ -33,10 +34,9 @@ if __name__ == "__main__":
     if os.environ["FLASK_DEBUG"] == "True":
         print("Starting SCSS compiler")
         scss = Popen(
-            ["sass", "--watch", "assets/scss/main.scss", "static/dist/bundle.css"]
+            ["sass", "--watch", "assets/scss/main.scss:static/dist/bundle.css"]
         )
-    app, db = create_app()
-    setup_database(app, db)
+    app = create_app()
 
     # Favicon request
     @app.route("/favicon.ico")
