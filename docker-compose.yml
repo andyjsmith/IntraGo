@@ -4,7 +4,9 @@ services:
     volumes:
       - ./database.sqlite3:/usr/src/app/database.sqlite3
     environment:
+      # Change this to something else! E.g. python3 -c "import secrets; print(secrets.token_hex(32))"
       - SECRET_KEY=b5eb7ab1b7bf57b82d6251c9c03e69e764ba1e8631a5c5d94a4fc9d0a1e6ec26
       - SQLALCHEMY_DATABASE_URI=sqlite:////usr/src/app/database.sqlite3
     ports:
       - "8000:8000"
+    restart: unless-stopped
