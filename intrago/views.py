@@ -15,7 +15,7 @@ def index():
     return render_template("pages/index.html", sites=sites)
 
 
-@intrago.route("/go/<name>")
+@intrago.route("/go/<path:name>")
 def go(name: str):
     # Find regular site
     site = db.session.query(Site).filter(Site.name == name).first()
